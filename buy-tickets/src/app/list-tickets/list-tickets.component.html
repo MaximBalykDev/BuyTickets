@@ -1,0 +1,9 @@
+<mat-card class="list-tickets">
+  <ng-container *ngFor="let ticket of (tickets$ | async)">
+    <mat-card class="ticket">
+      <mat-card-title>{{ticket.name}}</mat-card-title>
+      <mat-card-subtitle>{{ticket.price}}$</mat-card-subtitle>
+      <button mat-raised-button (click)="openDialog(ticket.price, ticket.id)">Buy now</button>
+    </mat-card>
+  </ng-container>
+</mat-card>
