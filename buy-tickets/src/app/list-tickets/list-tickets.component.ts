@@ -31,7 +31,7 @@ export class ListTicketsComponent implements OnInit {
   openDialog(price:number, id: string) {
     this.dialog.open(CreateTokenComponent, {
       width: '600px',
-      height: '200px',
+      height: '250px',
       data: { price: price, id: id }
     });
   }

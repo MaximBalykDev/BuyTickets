@@ -10,7 +10,6 @@ import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTreeModule } from '@angular/material/tree';
-import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CreateTokenComponent } from './create-token/create-token.component';
 import { NgxStripeModule } from "ngx-stripe";
@@ -21,6 +20,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoaderComponent } from './loader/loader.component';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -32,19 +32,19 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     LoaderComponent,
   ],
     imports: [
+      BrowserModule,
+      ReactiveFormsModule,
+      FormsModule,
+      MatInputModule,
       MatProgressSpinnerModule,
       MatFormFieldModule,
-      ReactiveFormsModule,
-      BrowserModule,
       AppRoutingModule,
       BrowserAnimationsModule,
       MatCardModule,
       MatButtonModule,
       MatDialogModule,
       MatTreeModule,
-      MatIconModule,
       MatGridListModule,
-      FormsModule,
       HttpClientModule,
       NgxStripeModule.forRoot('pk_test_51K2WhCFyWxzlg6TW5WwDfauuFOvHXlCdB81Jmj0JxMWvI2lpiFWzQqgPnv1btlWUQ9cYWfZbBfyMxeOaHIEgVswb00AvU1GnOG'),
       MatProgressBarModule,

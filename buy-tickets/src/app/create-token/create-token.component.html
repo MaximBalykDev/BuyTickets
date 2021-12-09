@@ -1,17 +1,20 @@
-<div [hidden]="isLoading">
+<form [hidden]="isLoading" (ngSubmit)="createToken()" [formGroup]="stripeCardForm">
   <mat-card-title>Price for ticket: {{data.price}} $ </mat-card-title>
-
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput type="text" formControlName="name">
+  </mat-form-field>
   <ngx-stripe-card
     [options]="cardOptions"
     [elementsOptions]="elementsOptions"
   ></ngx-stripe-card>
 
   <div class="btn">
-    <button mat-button type="submit" (click)="createToken()">
+    <button mat-button type="submit">
       Pay for a ticket
     </button>
   </div>
-</div>
+</form>
 
 <div *ngIf="isLoading" class="loader">
   <app-loader></app-loader>

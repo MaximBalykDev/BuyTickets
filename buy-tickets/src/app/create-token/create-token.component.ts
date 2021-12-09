@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
 import { StripeService, StripeCardComponent } from 'ngx-stripe';
 import {
   StripeCardElementOptions,
@@ -36,11 +36,11 @@ export class CreateTokenComponent implements OnInit {
       }
     }
   };
-
+  stripeCardForm: FormGroup;
   elementsOptions: StripeElementsOptions = {
     locale: 'en'
   };
-  stripeCardForm?: FormGroup;
+
   public isLoading = false;
 
   constructor(
@@ -49,12 +49,13 @@ export class CreateTokenComponent implements OnInit {
     public dialog: MatDialog,
     private fb: FormBuilder,
     private stripeService: StripeService,
-    @Inject(MAT_DIALOG_DATA) public data: ITicket) {}
+    @Inject(MAT_DIALOG_DATA) public data: ITicket) {
+    this.stripeCardForm = this.fb.group({
+      name: new FormControl('', [Validators.required, Validators.minLength(2)])
+    });
+  }
 
   ngOnInit(): void {
-    this.stripeCardForm = this.fb.group({
-      name: [null, [Validators.required, Validators.minLength(2)]]
-    });
     this.isLoading = false
   }
 
@@ -65,7 +66,7 @@ export class CreateTokenComponent implements OnInit {
   openConfirmationDialog(statusMessage?:string) {
     this.dialog.open(ConfirmationPageComponent, {
       width: '600px',
-      height: '200px',
+      height: '300px',
       data: {
         status: statusMessage
       },
@@ -78,7 +79,7 @@ export class CreateTokenComponent implements OnInit {
 
   createToken(): void {
     this.isLoading = true;
-    const name = this.stripeCardForm?.value.name;
+    const name = this.stripeCardForm.value.name;
     this.stripeService
       .createToken(this.card!.element, { name })
       .subscribe((result) => {
