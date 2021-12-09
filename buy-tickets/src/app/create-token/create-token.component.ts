@@ -15,6 +15,7 @@ import {IPaymentInterface} from "../interfaces/payment.interface";
 @Component({
   selector: 'app-create-token',
   templateUrl: './create-token.component.html',
+  styleUrls: ['./create-token.component.scss']
 })
 
 export class CreateTokenComponent implements OnInit {
@@ -39,10 +40,8 @@ export class CreateTokenComponent implements OnInit {
   elementsOptions: StripeElementsOptions = {
     locale: 'en'
   };
-
-  public isLoading?: boolean;
-
-  stripeTest?: FormGroup;
+  stripeCardForm?: FormGroup;
+  public isLoading = false;
 
   constructor(
     public tokenCardService: TokenCardService,
@@ -53,8 +52,8 @@ export class CreateTokenComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: ITicket) {}
 
   ngOnInit(): void {
-    this.stripeTest = this.fb.group({
-      name: ['', [Validators.required]]
+    this.stripeCardForm = this.fb.group({
+      name: [null, [Validators.required, Validators.minLength(2)]]
     });
     this.isLoading = false
   }
@@ -64,26 +63,22 @@ export class CreateTokenComponent implements OnInit {
   }
 
   openConfirmationDialog(statusMessage?:string) {
-    const dialogRef = this.dialog.open(ConfirmationPageComponent, {
+    this.dialog.open(ConfirmationPageComponent, {
       width: '600px',
       height: '200px',
       data: {
         status: statusMessage
       },
     });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
   }
 
-  sendPayment(paymentData: IPaymentInterface): Observable<any> {
-    return this.tokenCardService.sendPayment(paymentData.token, paymentData.amount, paymentData.id)
+  sendPayment(paymentData: IPaymentInterface): Observable<object> {
+    return this.tokenCardService.sendPayment(paymentData.token, paymentData.amount, paymentData.id);
   }
 
   createToken(): void {
     this.isLoading = true;
-    const name = this.stripeTest?.get('name')?.value;
+    const name = this.stripeCardForm?.value.name;
     this.stripeService
       .createToken(this.card!.element, { name })
       .subscribe((result) => {

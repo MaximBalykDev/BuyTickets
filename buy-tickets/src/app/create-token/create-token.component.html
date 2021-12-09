@@ -1,4 +1,4 @@
-<div>
+<div [hidden]="isLoading">
   <mat-card-title>Price for ticket: {{data.price}} $ </mat-card-title>
 
   <ngx-stripe-card
@@ -6,13 +6,13 @@
     [elementsOptions]="elementsOptions"
   ></ngx-stripe-card>
 
-  <div style="display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 30px;">
+  <div class="btn">
     <button mat-button type="submit" (click)="createToken()">
       Pay for a ticket
     </button>
   </div>
+</div>
 
+<div *ngIf="isLoading" class="loader">
+  <app-loader></app-loader>
 </div>

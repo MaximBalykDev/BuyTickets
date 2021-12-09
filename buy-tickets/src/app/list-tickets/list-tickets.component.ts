@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {CreateTokenComponent} from "../create-token/create-token.component";
-import {TokenCardService} from "../services/token-card.service";
-import {Observable} from "rxjs";
-import {ITicket} from "../interfaces/ticket.interface";
+import { CreateTokenComponent } from "../create-token/create-token.component";
+import { TokenCardService } from "../services/token-card.service";
+import { Observable } from "rxjs";
+import { ITicket } from "../interfaces/ticket.interface";
 
 @Component({
   selector: 'app-list-tickets',
@@ -17,9 +17,7 @@ export class ListTicketsComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public tokenCardService: TokenCardService,
-    ) {
-
-  }
+    ) { }
 
   ngOnInit(): void {
     this.getTicketsFromDB()
@@ -31,10 +29,10 @@ export class ListTicketsComponent implements OnInit {
 
 
   openDialog(price:number, id: string) {
-    const dialogRef = this.dialog.open(CreateTokenComponent, {
+    this.dialog.open(CreateTokenComponent, {
       width: '600px',
       height: '200px',
-      data: {price: price, id: id}
+      data: { price: price, id: id }
     });
   }
 

@@ -2,6 +2,10 @@
   width: 600px;
 }
 
+.loader {
+  display: flex; justify-content: center;
+}
+
 .btn {
   display: flex;
   align-items: center;

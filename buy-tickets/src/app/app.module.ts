@@ -13,7 +13,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CreateTokenComponent } from './create-token/create-token.component';
-import { NgxStripeModule, StripeService } from "ngx-stripe";
+import { NgxStripeModule } from "ngx-stripe";
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { ConfirmationPageComponent } from './confirmation-page/confirmation-page.component';
