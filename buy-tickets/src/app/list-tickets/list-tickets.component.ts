@@ -11,21 +11,20 @@ import { ITicket } from "../interfaces/ticket.interface";
   templateUrl: './list-tickets.component.html',
   styleUrls: ['./list-tickets.component.scss']
 })
-
 export class ListTicketsComponent implements OnInit {
   public tickets$?: Observable<ITicket[]>
 
   constructor(
     public dialog: MatDialog,
-    public tokenCardService: TokenCardService
+    public tokenCardService: TokenCardService,
   ) { }
 
   ngOnInit(): void {
-    this.getTicketsFromDB()
+    this.getTicketsFromDB();
   }
 
   getTicketsFromDB(): void {
-    this.tickets$ = this.tokenCardService.getListOfTickets()
+    this.tickets$ = this.tokenCardService.getListOfTickets();
   }
 
   openDialog(price:number, id: string): void {

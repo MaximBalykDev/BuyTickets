@@ -19,7 +19,6 @@ import {cardOptions} from "../../assets/constant";
   templateUrl: './create-token.component.html',
   styleUrls: ['./create-token.component.scss']
 })
-
 export class CreateTokenComponent implements OnInit, OnDestroy {
   @ViewChild(StripeCardComponent) card?: StripeCardComponent;
 
@@ -39,12 +38,12 @@ export class CreateTokenComponent implements OnInit, OnDestroy {
     private stripeService: StripeService,
     @Inject(MAT_DIALOG_DATA) public data: ITicket) {
     this.stripeCardForm = this.fb.group({
-      name: new FormControl('', [Validators.required, Validators.minLength(2)])
+      name: new FormControl('', [Validators.required, Validators.minLength(2)]),
     });
   }
 
   ngOnInit(): void {
-    this.isLoading = false
+    this.isLoading = false;
   }
 
   closeModal(): void {
@@ -56,7 +55,7 @@ export class CreateTokenComponent implements OnInit, OnDestroy {
       width: '600px',
       height: '300px',
       data: {
-        status: statusMessage
+        status: statusMessage,
       },
     });
   }
@@ -77,15 +76,15 @@ export class CreateTokenComponent implements OnInit, OnDestroy {
           this.sendPayment({token: result.token.id, amount: this.data.price, id: this.data.id})
             .subscribe(
             s => {
-              this.isLoading = false
-              this.openConfirmationDialog('Payment successful')
-              this.closeModal()
+              this.isLoading = false;
+              this.openConfirmationDialog('Payment successful');
+              this.closeModal();
             }
           )
         } else if (result.error) {
-          this.isLoading = false
-          this.openConfirmationDialog(result.error.message)
-          this.closeModal()
+          this.isLoading = false;
+          this.openConfirmationDialog(result.error.message);
+          this.closeModal();
         }
       });
   }

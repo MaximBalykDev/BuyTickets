@@ -13,14 +13,14 @@ export class BasketComponent implements OnInit {
   public boughtTickets$?: Observable<ITicket[]>;
 
   constructor(
-    public tokenCardService: TokenCardService
+    public tokenCardService: TokenCardService,
   ) { }
 
   getBoughtTickets(): void {
-    this.boughtTickets$ = this.tokenCardService.getListOfBoughtTickets()
+    this.boughtTickets$ = this.tokenCardService.getListOfBoughtTickets();
   }
 
   ngOnInit(): void {
-    this.getBoughtTickets()
+    this.getBoughtTickets();
   }
 }

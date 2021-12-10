@@ -8,12 +8,11 @@ import { IConfirmationData } from "../interfaces/confirmation-data.interface";
   templateUrl: './confirmation-page.component.html',
   styleUrls: ['./confirmation-page.component.scss']
 })
-
 export class ConfirmationPageComponent {
   constructor(
     public dialogRef: MatDialogRef<ConfirmationPageComponent>,
     public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: IConfirmationData
+    @Inject(MAT_DIALOG_DATA) public data: IConfirmationData,
   ) { }
 
   closeModal(): void {
