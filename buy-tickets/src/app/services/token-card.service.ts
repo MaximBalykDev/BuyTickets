@@ -1,12 +1,12 @@
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {ITicket} from "../interfaces/ticket.interface";
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+
+import { ITicket } from "../interfaces/ticket.interface";
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class TokenCardService {
   constructor(
     private httpClient: HttpClient
@@ -23,5 +23,4 @@ export class TokenCardService {
   getListOfBoughtTickets(): Observable<ITicket[]>{
     return this.httpClient.get(`http://localhost:3000/tickets/all`) as Observable<ITicket[]>;
   }
-
 }

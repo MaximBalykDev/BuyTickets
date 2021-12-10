@@ -1,6 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {IConfirmationData} from "../interfaces/confirmation-data.interface";
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
+
+import { IConfirmationData } from "../interfaces/confirmation-data.interface";
 
 @Component({
   selector: 'app-confirmation-page',
@@ -8,17 +9,14 @@ import {IConfirmationData} from "../interfaces/confirmation-data.interface";
   styleUrls: ['./confirmation-page.component.scss']
 })
 
-export class ConfirmationPageComponent implements OnInit {
+export class ConfirmationPageComponent {
   constructor(
     public dialogRef: MatDialogRef<ConfirmationPageComponent>,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: IConfirmationData
   ) { }
 
-  ngOnInit(): void {}
-
   closeModal(): void {
     this.dialogRef.close();
   }
-
 }

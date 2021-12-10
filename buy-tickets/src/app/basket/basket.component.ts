@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from "rxjs";
+import { Observable } from "rxjs";
+
 import { ITicket } from "../interfaces/ticket.interface";
 import { TokenCardService } from "../services/token-card.service";
 
@@ -15,12 +16,11 @@ export class BasketComponent implements OnInit {
     public tokenCardService: TokenCardService
   ) { }
 
-  getBoughtTickets():void {
+  getBoughtTickets(): void {
     this.boughtTickets$ = this.tokenCardService.getListOfBoughtTickets()
   }
 
   ngOnInit(): void {
     this.getBoughtTickets()
   }
-
 }

@@ -1,16 +1,18 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
 import { StripeService, StripeCardComponent } from 'ngx-stripe';
 import {
   StripeCardElementOptions,
   StripeElementsOptions
 } from '@stripe/stripe-js';
+import { Observable, Subject, takeUntil } from "rxjs";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
+
 import { ITicket } from "../interfaces/ticket.interface";
 import { ConfirmationPageComponent } from "../confirmation-page/confirmation-page.component";
-import { Observable } from "rxjs";
 import { TokenCardService } from "../services/token-card.service";
-import {IPaymentInterface} from "../interfaces/payment.interface";
+import { IPaymentInterface } from "../interfaces/payment.interface";
+import {cardOptions} from "../../assets/constant";
 
 @Component({
   selector: 'app-create-token',
@@ -18,30 +20,16 @@ import {IPaymentInterface} from "../interfaces/payment.interface";
   styleUrls: ['./create-token.component.scss']
 })
 
-export class CreateTokenComponent implements OnInit {
+export class CreateTokenComponent implements OnInit, OnDestroy {
   @ViewChild(StripeCardComponent) card?: StripeCardComponent;
 
-  cardOptions: StripeCardElementOptions = {
-    hidePostalCode: true,
-    style: {
-      base: {
-        iconColor: '#666EE8',
-        color: '#31325F',
-        fontWeight: '300',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSize: '18px',
-        '::placeholder': {
-          color: '#CFD7E0'
-        }
-      }
-    }
-  };
+  cardOptions: StripeCardElementOptions = cardOptions;
   stripeCardForm: FormGroup;
-  elementsOptions: StripeElementsOptions = {
-    locale: 'en'
-  };
+  elementsOptions: StripeElementsOptions = { locale: 'en' };
 
   public isLoading = false;
+
+  private unsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     public tokenCardService: TokenCardService,
@@ -63,7 +51,7 @@ export class CreateTokenComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  openConfirmationDialog(statusMessage?:string) {
+  openConfirmationDialog(statusMessage?: string): void {
     this.dialog.open(ConfirmationPageComponent, {
       width: '600px',
       height: '300px',
@@ -81,10 +69,13 @@ export class CreateTokenComponent implements OnInit {
     this.isLoading = true;
     const name = this.stripeCardForm.value.name;
     this.stripeService
-      .createToken(this.card!.element, { name })
+      .createToken(this.card!.element, { name }).pipe(
+        takeUntil(this.unsubscribe$)
+    )
       .subscribe((result) => {
         if (result.token) {
-          this.sendPayment({token: result.token.id, amount: this.data.price, id: this.data.id}).subscribe(
+          this.sendPayment({token: result.token.id, amount: this.data.price, id: this.data.id})
+            .subscribe(
             s => {
               this.isLoading = false
               this.openConfirmationDialog('Payment successful')
@@ -99,4 +90,8 @@ export class CreateTokenComponent implements OnInit {
       });
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 }
