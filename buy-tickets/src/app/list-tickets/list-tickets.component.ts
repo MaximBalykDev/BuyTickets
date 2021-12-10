@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from "rxjs";
 
@@ -9,7 +9,8 @@ import { ITicket } from "../interfaces/ticket.interface";
 @Component({
   selector: 'app-list-tickets',
   templateUrl: './list-tickets.component.html',
-  styleUrls: ['./list-tickets.component.scss']
+  styleUrls: ['./list-tickets.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListTicketsComponent implements OnInit {
   public tickets$?: Observable<ITicket[]>

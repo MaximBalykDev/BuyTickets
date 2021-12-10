@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
 import { StripeService, StripeCardComponent } from 'ngx-stripe';
 import {
@@ -12,12 +12,13 @@ import { ITicket } from "../interfaces/ticket.interface";
 import { ConfirmationPageComponent } from "../confirmation-page/confirmation-page.component";
 import { TokenCardService } from "../services/token-card.service";
 import { IPaymentInterface } from "../interfaces/payment.interface";
-import {cardOptions} from "../../assets/constant";
+import { cardOptions } from "../../assets/constant";
 
 @Component({
   selector: 'app-create-token',
   templateUrl: './create-token.component.html',
-  styleUrls: ['./create-token.component.scss']
+  styleUrls: ['./create-token.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateTokenComponent implements OnInit, OnDestroy {
   @ViewChild(StripeCardComponent) card?: StripeCardComponent;
@@ -73,9 +74,9 @@ export class CreateTokenComponent implements OnInit, OnDestroy {
     )
       .subscribe((result) => {
         if (result.token) {
-          this.sendPayment({token: result.token.id, amount: this.data.price, id: this.data.id})
+          this.sendPayment({ token: result.token.id, amount: this.data.price, id: this.data.id })
             .subscribe(
-            s => {
+            item => {
               this.isLoading = false;
               this.openConfirmationDialog('Payment successful');
               this.closeModal();

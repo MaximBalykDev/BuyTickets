@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 import { IConfirmationData } from "../interfaces/confirmation-data.interface";
@@ -6,7 +6,8 @@ import { IConfirmationData } from "../interfaces/confirmation-data.interface";
 @Component({
   selector: 'app-confirmation-page',
   templateUrl: './confirmation-page.component.html',
-  styleUrls: ['./confirmation-page.component.scss']
+  styleUrls: ['./confirmation-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmationPageComponent {
   constructor(
